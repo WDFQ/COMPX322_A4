@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
+import { ShoppingCart } from 'lucide-react'
 
 export function NavBar() {
     //TODO: wireup cartCount to actual cart info
@@ -8,20 +9,12 @@ export function NavBar() {
         <nav className="bg-gray-900 text-white px-8 py-4 flex items-center justify-between">
             {/* logo that also takes you to product page */}
             <NavLink to="/">
-                <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+                {/* <img src="/logo.png" alt="Logo" className="h-10 w-auto" /> */}
+                <span className="text-xl font-bold">Shop</span>
             </NavLink>
 
             {/* product page nav link */}
-            <div className="flex items-center gap-8">
-                <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                        `text-sm font-semibold tracking-widest uppercase transition-colors ${isActive ? 'text-yellow-400' : 'text-white hover:text-yellow-400'}`
-                    }
-                >
-                    Products
-                </NavLink>
-            </div>
+            <NavLink to="/">Products</NavLink>
 
             {/* cart page nav link */}
             <NavLink to="/cart">

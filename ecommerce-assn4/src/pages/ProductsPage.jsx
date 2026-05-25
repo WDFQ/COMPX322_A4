@@ -9,7 +9,12 @@ export function ProductsPage() {
         <>
             <NavBar />
 
-            <div className=""></div>
+            <div>
+                {users.map((user) => (
+                    // Always include a unique key
+                    <li key={user.id}>{user.name}</li>
+                ))}
+            </div>
         </>
     )
 }
