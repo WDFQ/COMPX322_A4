@@ -1,3 +1,5 @@
+import { NavBar } from './components/Navbar'
+
 export function ProductsPage() {
     // get products from api
 
@@ -5,6 +7,7 @@ export function ProductsPage() {
 
     return (
         <>
+            <NavBar />
             <p>hello world</p>
         </>
     )
