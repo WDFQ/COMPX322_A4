@@ -6,17 +6,33 @@ import { useQuery } from '@tanstack/react-query'
 export function ProductsPage() {
     const [search, setSearch] = useState('')
     const [finalSearch, setFinalSearch] = useState('')
+    const [filterOption, setFilterOption] = useState('')
 
     // get products from api
-    const { data, isLoading, isError } = useQuery({
+    const {
+        data: productData,
+        isLoading: isProductLoading,
+        isError: isProductError,
+    } = useQuery({
         queryKey: ['products', finalSearch],
         queryFn: () => getProducts({ search: finalSearch }),
     })
 
-    if (isLoading) {
-        return <p>Loading products...</p>
-    } else if (isError) {
-        return <p>An error has occured</p>
+    const {
+        data: categoryData,
+        isLoading: isCategoryLoading,
+        isError: isCategoryError,
+    } = useQuery({
+        queryKey: ['categories'],
+        queryFn: getCategories,
+    })
+
+    if (isProductLoading || isCategoryLoading) {
+        return <p>Loading...</p>
+    }
+
+    if (isProductError || isCategoryError) {
+        return <p>An error has occurred</p>
     }
 
     return (
@@ -30,14 +46,31 @@ export function ProductsPage() {
                 onKeyDown={(e) => e.key === 'Enter' && setFinalSearch(e.target.value)}
             />
 
+            <label>Filter by category:</label>
+            <select value={filterOption} onChange={setFilterOption}>
+                {categoryData.map((category) => (
+                    <option key={category.value} value={category.value}>
+                        {category.label}
+                    </option>
+                ))}
+            </select>
+
             {/* all product cards */}
             <div className="grid grid-cols-3 px-50 gap-4 bg-white py-20">
-                {data.map((product) => (
+                {productData.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}
             </div>
         </>
     )
+}
+
+async function getCategories() {
+    const response = await fetch(`http://localhost:3000/products/categories`)
+    if (!response.ok) {
+        throw new Error(`Failed to fetch categories`)
+    }
+    return response.json()
 }
 
 // function to return the products from api with filtering, sorting, and searching
@@ -51,7 +84,7 @@ async function getProducts({ search }) {
 
     const response = await fetch(`http://localhost:3000/products?${params}`)
     if (!response.ok) {
-        throw new Error('failed to fetch products')
+        throw new Error('Failed to fetch products')
     }
     return response.json()
 }
