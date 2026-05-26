@@ -48,9 +48,10 @@ export function ProductsPage() {
 
             <label>Filter by category:</label>
             <select value={filterOption} onChange={setFilterOption}>
+                <option value="">All Categories</option>
                 {categoryData.map((category) => (
-                    <option key={category.value} value={category.value}>
-                        {category.label}
+                    <option key={category} value={category}>
+                        {category}
                     </option>
                 ))}
             </select>
