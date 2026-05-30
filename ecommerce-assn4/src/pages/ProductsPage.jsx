@@ -52,7 +52,7 @@ export function ProductsPage() {
 
                 {/* filter bar */}
                 <select value={filterOption} onChange={(e) => setFilterOption(e.target.value)} className="border border-gray-300 rounded px-3 py-2 ">
-                    <option>Filter by categories...</option>
+                    <option value={''}>Filter by categories...</option>
                     {categoryData.map((category) => (
                         <option key={category} value={category}>
                             {category}
