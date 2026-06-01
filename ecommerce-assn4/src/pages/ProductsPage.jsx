@@ -69,7 +69,7 @@ export function ProductsPage() {
             </div>
 
             {/* all product cards */}
-            <div className="grid grid-cols-3 px-50 gap-4 bg-white py-20">
+            <div className="grid grid-cols-3 px-35 gap-10 bg-white py-20">
                 {productData.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

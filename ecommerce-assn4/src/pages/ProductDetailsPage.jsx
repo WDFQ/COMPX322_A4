@@ -1,10 +1,25 @@
-export function ProductDetailsPage({ title, image, description, category, price, stock }) {
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+
+export function ProductDetailsPage() {
+    const { id } = useParams()
+
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['product', id],
+        queryFn: () => getProduct(id),
+    })
+
+    if (isLoading) return <p>Loading...</p>
+    if (isError) return <p>Something went wrong.</p>
+
+    const { title, price, category, description, stock, image } = data
+
     return (
-        <div className="flex">
+        <div className="flex bg-white">
             <img src={image} alt={title} className="rounded-lg" />
 
             {/* text part of product */}
-            <div>
+            <div flex flex-col jutify-around mx-10 px-10>
                 <h2>{title}</h2>
                 <p>{price}</p>
                 <p>{category}</p>
@@ -15,6 +30,14 @@ export function ProductDetailsPage({ title, image, description, category, price,
             </div>
         </div>
     )
+}
+
+async function getProduct(id) {
+    const response = await fetch(`http://localhost:3000/products/${id}`)
+    if (!response.ok) {
+        throw new Error(`Failed to fetch categories`)
+    }
+    return response.json()
 }
 
 async function handleClick() {
