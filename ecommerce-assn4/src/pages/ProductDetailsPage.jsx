@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
+import { CartContext } from '../context/CartContext'
 
 export function ProductDetailsPage() {
     const { id } = useParams()
+    const { cart, addToCart } = useContext(CartContext)
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['product', id],
@@ -40,7 +43,6 @@ async function getProduct(id) {
     return response.json()
 }
 
-async function handleClick() {
-    // update backend with added cart item
-    fetch
+function handleClick() {
+    addToCart(product)
 }
