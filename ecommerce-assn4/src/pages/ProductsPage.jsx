@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { NavBar } from '../components/Navbar'
 import { ProductCard } from '../components/ProductCard'
 import { useQuery } from '@tanstack/react-query'
+import { CartContext } from '../context/CartContext'
 
 export function ProductsPage() {
     const [search, setSearch] = useState('')
     const [finalSearch, setFinalSearch] = useState('')
     const [filterOption, setFilterOption] = useState('')
     const [priceSort, setPriceSort] = useState('')
+
+    // CartContext from its own file
+    const { cart, addToCart } = useContext(CartContext)
 
     // get products from api
     const {

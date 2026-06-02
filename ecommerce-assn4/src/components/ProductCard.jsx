@@ -1,6 +1,10 @@
+import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { CartContext } from '../context/CartContext'
 
 export function ProductCard({ product }) {
+    const { cart, addToCart } = useContext(CartContext)
+
     const {
         id, // for linking to the details page
         title, // product name
@@ -10,6 +14,11 @@ export function ProductCard({ product }) {
         stock, // 15
         image, // image URL
     } = product
+
+    // adds to cart via parent contexts
+    function handleAddCart() {
+        addToCart(product)
+    }
 
     return (
         <div className="flex flex-col bg-neutral-100 rounded-lg text-black group">
@@ -27,7 +36,9 @@ export function ProductCard({ product }) {
                 <NavLink to={`/details/${id}`} className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-2 my-3">
                     View details
                 </NavLink>
-                <button className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-2 my-3">Add to Cart</button>
+                <button className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-2 my-3" onClick={handleAddCart}>
+                    Add to Cart
+                </button>
             </div>
         </div>
     )
