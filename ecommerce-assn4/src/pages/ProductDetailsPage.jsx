@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
-import { data, useParams } from 'react-router-dom'
+import { data, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 
 export function ProductDetailsPage() {
     const { id } = useParams()
-    const { cart, addToCart } = useContext(CartContext)
+    const { addToCart } = useContext(CartContext)
+    const navigate = useNavigate()
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['product', id],
@@ -21,12 +22,20 @@ export function ProductDetailsPage() {
         addToCart(data)
     }
 
+    async function getProduct(id) {
+        const response = await fetch(`http://localhost:3000/products/${id}`)
+        if (!response.ok) {
+            navigate('/notfound')
+        }
+        return response.json()
+    }
+
     return (
         <div className="flex bg-white">
             <img src={image} alt={title} className="rounded-lg" />
 
             {/* text part of product */}
-            <div flex flex-col jutify-around mx-10 px-10>
+            <div className="flex flex-col jutify-around mx-10 px-10">
                 <h2>{title}</h2>
                 <p>{price}</p>
                 <p>{category}</p>
@@ -39,12 +48,4 @@ export function ProductDetailsPage() {
             </div>
         </div>
     )
-}
-
-async function getProduct(id) {
-    const response = await fetch(`http://localhost:3000/products/${id}`)
-    if (!response.ok) {
-        throw new Error(`Failed to fetch categories`)
-    }
-    return response.json()
 }

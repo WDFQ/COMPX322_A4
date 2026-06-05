@@ -2,14 +2,28 @@ import { Routes, Route } from 'react-router-dom'
 import { CartPage } from './pages/CartPage'
 import { ProductsPage } from './pages/ProductsPage'
 import { NavBar } from './components/Navbar'
+import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductDetailsPage } from './pages/ProductDetailsPage'
 import { useState } from 'react'
 import { CartContext } from './context/CartContext'
-import { infiniteQueryOptions } from '@tanstack/react-query'
 
 function App() {
     // cart holds product objects with a quantity parameter
     const [cart, setCart] = useState([])
+
+    function updateQuantity(id, newQuantity) {
+        if (newQuantity < 1) {
+            removeFromCart(id)
+            return
+        }
+
+        // reboot list with new quantity
+        setCart(cart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
+    }
+
+    function removeFromCart(id) {
+        setCart(cart.filter((item) => item.id !== id))
+    }
 
     function addToCart(product) {
         // find the product via its id
@@ -29,12 +43,13 @@ function App() {
 
     return (
         <>
-            <CartContext.Provider value={{ cart, addToCart }}>
+            <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart }}>
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<ProductsPage />}></Route>
                     <Route path="/cart" element={<CartPage />}></Route>
                     <Route path="/details/:id" element={<ProductDetailsPage />}></Route>
+                    <Route path="/notfound" element={<NotFoundPage />}></Route>
                 </Routes>
             </CartContext.Provider>
         </>
