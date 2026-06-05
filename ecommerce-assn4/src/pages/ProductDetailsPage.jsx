@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { data, useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 
 export function ProductDetailsPage() {
@@ -17,6 +17,10 @@ export function ProductDetailsPage() {
 
     const { title, price, category, description, stock, image } = data
 
+    function handleClick() {
+        addToCart(data)
+    }
+
     return (
         <div className="flex bg-white">
             <img src={image} alt={title} className="rounded-lg" />
@@ -29,7 +33,9 @@ export function ProductDetailsPage() {
                 <p>{description}</p>
                 <p>{stock}</p>
 
-                <button onClick={handleClick}>Add to cart | {price}</button>
+                <button onClick={handleClick} className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-2 my-3">
+                    Add to cart | {price}
+                </button>
             </div>
         </div>
     )
@@ -41,8 +47,4 @@ async function getProduct(id) {
         throw new Error(`Failed to fetch categories`)
     }
     return response.json()
-}
-
-function handleClick() {
-    addToCart(product)
 }

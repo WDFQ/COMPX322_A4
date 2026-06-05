@@ -18,8 +18,12 @@ function App() {
             // create new list with new product and set quantity to 1
             setCart([...cart, { ...product, quantity: 1 }])
         } else {
-            // create new list and if product matches with the target then increase its quantity
-            setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)))
+            if (item.quantity < product.stock) {
+                // create new list and if product matches with the target then increase its quantity
+                setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)))
+            } else {
+                alert('No more extra stock to add to cart!')
+            }
         }
     }
 
