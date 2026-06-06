@@ -4,13 +4,20 @@ import { ProductsPage } from './pages/ProductsPage'
 import { NavBar } from './components/Navbar'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductDetailsPage } from './pages/ProductDetailsPage'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CartContext } from './context/CartContext'
 import { CheckoutPage } from './pages/CheckoutPage'
 
 function App() {
     // cart holds product objects with a quantity parameter
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem('cart')
+        return savedCart ? JSON.parse(savedCart) : []
+    })
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart))
+    }, [cart])
 
     function updateQuantity(id, newQuantity) {
         if (newQuantity < 1) {
