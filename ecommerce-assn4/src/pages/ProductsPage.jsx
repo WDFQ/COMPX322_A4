@@ -31,20 +31,11 @@ export function ProductsPage() {
         queryFn: getCategories,
     })
 
-    // if (isProductLoading || isCategoryLoading) {
-    //     return <p>Loading...</p>
-    // }
-
-    // if (isProductError || isCategoryError) {
-    //     return <p>An error has occurred</p>
-    // }
-
     return (
         <>
             <ProductFilters
                 search={search}
                 setSearch={setSearch}
-                //setFinalSearch={setFinalSearch}
                 filterOption={filterOption}
                 setFilterOption={setFilterOption}
                 priceSort={priceSort}

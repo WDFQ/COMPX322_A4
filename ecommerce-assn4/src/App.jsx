@@ -6,6 +6,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductDetailsPage } from './pages/ProductDetailsPage'
 import { useState } from 'react'
 import { CartContext } from './context/CartContext'
+import { CheckoutPage } from './pages/CheckoutPage'
 
 function App() {
     // cart holds product objects with a quantity parameter
@@ -14,6 +15,12 @@ function App() {
     function updateQuantity(id, newQuantity) {
         if (newQuantity < 1) {
             removeFromCart(id)
+            return
+        }
+
+        const item = cart.find((item) => item.id === id)
+        if (newQuantity > item.stock) {
+            alert('No more extra stock to add to cart!')
             return
         }
 
@@ -50,6 +57,7 @@ function App() {
                     <Route path="/cart" element={<CartPage />}></Route>
                     <Route path="/details/:id" element={<ProductDetailsPage />}></Route>
                     <Route path="/notfound" element={<NotFoundPage />}></Route>
+                    <Route path="/checkout" element={<CheckoutPage />}></Route>
                 </Routes>
             </CartContext.Provider>
         </>

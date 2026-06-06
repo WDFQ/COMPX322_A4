@@ -1,9 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
 export function NavBar() {
+    const { cart } = useContext(CartContext)
     //TODO: wireup cartCount to actual cart info
-    const cartCount = 0
+    const cartCount = cart.length
+    console.log(cartCount)
 
     return (
         <nav className="bg-mist-900 text-white px-8 py-4 flex items-center justify-between">

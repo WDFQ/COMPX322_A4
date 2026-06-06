@@ -10,7 +10,9 @@ export function CartItem({ id, image, title, quantity, price }) {
             <img src={image} alt={title} className="w-20 h-20 object-cover rounded-lg" />
             <p className="font-semibold text-sm truncate">{title}</p>
             <ProductCartControls updateQuantity={updateQuantity} removeFromCart={removeFromCart} quantity={quantity} id={id} />
-            <p className="text-sm font-semibold text-right">${price * quantity}</p>
+
+            {/* total item price */}
+            <p className="text-sm font-semibold text-right">${(price * quantity).toFixed(2)}</p>
         </div>
     )
 }
