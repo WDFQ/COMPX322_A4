@@ -11,10 +11,6 @@ function calcTotal(cart) {
     return total.toFixed(2)
 }
 
-function clearCart() {
-    cart.length = 0
-}
-
 export function CheckoutPage() {
     const [checkedOut, setCheckedOut] = useState(false)
     const { cart } = useContext(CartContext)
@@ -59,9 +55,8 @@ export function CheckoutPage() {
             const result = await response.json()
             console.log('Success:', result)
 
-            // trigger confirmation page and clear the cart
+            // trigger confirmation page
             setCheckedOut(true)
-            clearCart()
         } catch (error) {
             console.error('Error during POST request:', error)
         }
