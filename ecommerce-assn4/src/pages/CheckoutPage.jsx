@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { CartContext } from '../context/CartContext'
 import { useMutation } from '@tanstack/react-query'
+import { createOrder } from '../services/api'
 
 // calculate total price in cart
 function calcTotal(cart) {
@@ -30,10 +31,12 @@ export function CheckoutPage() {
         },
     })
 
+    function createPayload() {
+        return
+    }
+
     // post function
     async function submitForm(data) {
-        const url = 'http://localhost:3000/orders'
-
         const payload = {
             customer: {
                 name: data.name,
@@ -47,20 +50,7 @@ export function CheckoutPage() {
             total: calcTotal(cart),
         }
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`)
-        }
-
-        return response.json()
+        return createOrder(payload)
     }
 
     if (addToOrders.isSuccess) {

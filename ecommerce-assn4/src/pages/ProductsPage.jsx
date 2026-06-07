@@ -4,10 +4,10 @@ import { ProductCard } from '../components/ProductCard'
 import { useQuery } from '@tanstack/react-query'
 import { CartContext } from '../context/CartContext'
 import { ProductFilters } from '../components/ProductFilters'
+import { getCategories, getProducts } from '../services/api'
 
 export function ProductsPage() {
     const [search, setSearch] = useState('')
-    //const [finalSearch, setFinalSearch] = useState('')
     const [filterOption, setFilterOption] = useState('')
     const [priceSort, setPriceSort] = useState('')
 
@@ -54,36 +54,4 @@ export function ProductsPage() {
             ) : null}
         </>
     )
-}
-
-async function getCategories() {
-    const response = await fetch(`http://localhost:3000/products/categories`)
-    if (!response.ok) {
-        throw new Error(`Failed to fetch categories`)
-    }
-    return response.json()
-}
-
-// function to return the products from api with filtering, sorting, and searching
-async function getProducts({ search, filter, sort }) {
-    // params formatter
-    const params = new URLSearchParams()
-
-    if (search) {
-        params.append('search', search)
-    }
-
-    if (filter) {
-        params.append('category', filter)
-    }
-
-    if (sort) {
-        params.append('sort', sort)
-    }
-
-    const response = await fetch(`http://localhost:3000/products?${params}`)
-    if (!response.ok) {
-        throw new Error('Failed to fetch products')
-    }
-    return response.json()
 }

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 export function CartPage() {
     // render all cart items
-    const { cart } = useContext(CartContext)
+    const { cart, removeAllFromCart } = useContext(CartContext)
 
     // calculat total price
     let total = 0
@@ -33,6 +33,12 @@ export function CartPage() {
             {cart.map((product) => (
                 <CartItem key={product.id} {...product} />
             ))}
+
+            <div className="flex justify-end w-full">
+                <button className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-6 py-3 mr-3 mt-3" onClick={removeAllFromCart}>
+                    Clear Cart
+                </button>
+            </div>
 
             {/* display total price */}
             <div className="flex justify-between items-center border-t pt-4 mt-2">

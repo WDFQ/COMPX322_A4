@@ -41,6 +41,11 @@ function App() {
         setCart(cart.filter((item) => item.id !== id))
     }
 
+    // remove all item from cart
+    function removeAllFromCart() {
+        setCart([])
+    }
+
     // adds product to cart if not exist already
     function addToCart(product) {
         // find the product via its id
@@ -60,7 +65,7 @@ function App() {
 
     return (
         <>
-            <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart }}>
+            <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, removeAllFromCart }}>
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<ProductsPage />}></Route>
