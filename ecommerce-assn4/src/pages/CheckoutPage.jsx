@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
+import { useState, useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { useMutation } from '@tanstack/react-query'
 import { createOrder } from '../services/api'
@@ -16,12 +15,62 @@ function calcTotal(cart) {
 export function CheckoutPage() {
     const { cart } = useContext(CartContext)
 
-    // react hook form stuff
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm()
+    // controlled form state
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        postcode: '',
+    })
+
+    // validation error state
+    const [errors, setErrors] = useState({})
+
+    // update the correct field and clear its error on change
+    function handleChange(e) {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+        setErrors((prev) => ({ ...prev, [name]: null }))
+    }
+
+    // validate all fields
+    function validate(data) {
+        const newErrors = {}
+
+        if (!data.name.trim()) {
+            newErrors.name = 'Name is required'
+        }
+
+        if (!data.email.trim()) {
+            newErrors.email = 'Email is required'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            newErrors.email = 'Please enter a valid email address'
+        }
+
+        if (!data.phone.trim()) {
+            newErrors.phone = 'Phone is required'
+        } else if (!/^[0-9+\s]+$/.test(data.phone)) {
+            newErrors.phone = 'Phone number can only contain numbers, spaces, or +'
+        }
+
+        if (!data.address.trim()) {
+            newErrors.address = 'Delivery address is required'
+        }
+
+        if (!data.city.trim()) {
+            newErrors.city = 'City is required'
+        }
+
+        if (!data.postcode.trim()) {
+            newErrors.postcode = 'Postcode is required'
+        } else if (!/^\d{4}$/.test(data.postcode)) {
+            newErrors.postcode = 'Postcode can only have 4 numbers'
+        }
+
+        return newErrors
+    }
 
     const addToOrders = useMutation({
         mutationFn: submitForm,
@@ -30,10 +79,6 @@ export function CheckoutPage() {
             alert('Checkout failed! Err' + err.message)
         },
     })
-
-    function createPayload() {
-        return
-    }
 
     // post function
     async function submitForm(data) {
@@ -53,6 +98,20 @@ export function CheckoutPage() {
         return createOrder(payload)
     }
 
+    // handle form submission with validation
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        const validationErrors = validate(formData)
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors)
+            return
+        }
+
+        addToOrders.mutate(formData)
+    }
+
     if (addToOrders.isSuccess) {
         // trigger confirmation page
         return (
@@ -65,17 +124,19 @@ export function CheckoutPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit(addToOrders.mutate)} className="max-w-xl mx-auto p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 space-y-4">
             {/* name input */}
             <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700">Full name</label>
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="text"
+                    name="name"
                     placeholder="Enter full name..."
-                    {...register('name', { required: 'Name is required' })}
-                ></input>
-                {errors.name ? <p className="text-sm text-red-600">{errors.name.message}</p> : null}
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+                {errors.name ? <p className="text-sm text-red-600">{errors.name}</p> : null}
             </div>
 
             {/* email input */}
@@ -84,10 +145,12 @@ export function CheckoutPage() {
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="email"
+                    name="email"
                     placeholder="Enter email..."
-                    {...register('email', { required: 'Email is required' })}
-                ></input>
-                {errors.email ? <p className="text-sm text-red-600">{errors.email.message}</p> : null}
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+                {errors.email ? <p className="text-sm text-red-600">{errors.email}</p> : null}
             </div>
 
             {/* phone input */}
@@ -96,17 +159,12 @@ export function CheckoutPage() {
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="tel"
+                    name="phone"
                     placeholder="Enter phone number..."
-                    {...register('phone', {
-                        required: 'Phone is required',
-                        pattern: {
-                            // regex to only allow numbers spaces and + symbol
-                            value: /^[0-9+\s]+$/,
-                            message: 'Phone number can only contain numbers, spaces, or +',
-                        },
-                    })}
-                ></input>
-                {errors.phone ? <p className="text-sm text-red-600">{errors.phone.message}</p> : null}
+                    value={formData.phone}
+                    onChange={handleChange}
+                />
+                {errors.phone ? <p className="text-sm text-red-600">{errors.phone}</p> : null}
             </div>
 
             {/* address input */}
@@ -115,10 +173,12 @@ export function CheckoutPage() {
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="text"
+                    name="address"
                     placeholder="Enter delivery address..."
-                    {...register('address', { required: 'Delivery address is required' })}
-                ></input>
-                {errors.address ? <p className="text-sm text-red-600">{errors.address.message}</p> : null}
+                    value={formData.address}
+                    onChange={handleChange}
+                />
+                {errors.address ? <p className="text-sm text-red-600">{errors.address}</p> : null}
             </div>
 
             {/* city input */}
@@ -127,10 +187,12 @@ export function CheckoutPage() {
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="text"
+                    name="city"
                     placeholder="Enter city..."
-                    {...register('city', { required: 'City is required' })}
-                ></input>
-                {errors.city ? <p className="text-sm text-red-600">{errors.city.message}</p> : null}
+                    value={formData.city}
+                    onChange={handleChange}
+                />
+                {errors.city ? <p className="text-sm text-red-600">{errors.city}</p> : null}
             </div>
 
             {/* postcode input */}
@@ -139,10 +201,12 @@ export function CheckoutPage() {
                 <input
                     className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
                     type="number"
+                    name="postcode"
                     placeholder="Enter postcode..."
-                    {...register('postcode', { required: 'Postcode is required', pattern: { value: /^\d{4}$/, message: 'Postcode can only have 4 numbers' } })}
-                ></input>
-                {errors.postcode ? <p className="text-sm text-red-600">{errors.postcode.message}</p> : null}
+                    value={formData.postcode}
+                    onChange={handleChange}
+                />
+                {errors.postcode ? <p className="text-sm text-red-600">{errors.postcode}</p> : null}
             </div>
 
             {/* submit button */}
