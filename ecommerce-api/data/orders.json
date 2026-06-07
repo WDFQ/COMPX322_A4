@@ -1,1 +1,143 @@
-[]
+[
+  {
+    "id": 1,
+    "customer": {
+      "name": "aksjflaskdj",
+      "email": "lsdkjf@gmail.com",
+      "phone": "23984238947",
+      "delivery_address": "aslfjaskjdf",
+      "city": "lksjflkasjf",
+      "postcode": "234"
+    },
+    "items": [
+      {
+        "id": 1,
+        "title": "Wireless Headphones",
+        "description": "Noise-cancelling Bluetooth headphones with long battery life.",
+        "price": 129.99,
+        "category": "Electronics",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600",
+        "stock": 15,
+        "rating": 4.6,
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "title": "Smart Watch",
+        "description": "Fitness tracking, notifications, and health monitoring in one device.",
+        "price": 199.99,
+        "category": "Electronics",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600",
+        "stock": 9,
+        "rating": 4.4,
+        "quantity": 2
+      },
+      {
+        "id": 3,
+        "title": "Running Shoes",
+        "description": "Lightweight running shoes designed for daily training.",
+        "price": 149.99,
+        "category": "Fashion",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600",
+        "stock": 22,
+        "rating": 4.7,
+        "quantity": 1
+      }
+    ],
+    "total": "679.96"
+  },
+  {
+    "id": 2,
+    "customer": {
+      "name": "asdfasf",
+      "email": "sdfas@gmail.com",
+      "phone": "324234234234",
+      "delivery_address": "sfasf",
+      "city": "asdfsaf",
+      "postcode": "2422"
+    },
+    "items": [
+      {
+        "id": 1,
+        "title": "Wireless Headphones",
+        "description": "Noise-cancelling Bluetooth headphones with long battery life.",
+        "price": 129.99,
+        "category": "Electronics",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600",
+        "stock": 15,
+        "rating": 4.6,
+        "quantity": 3
+      },
+      {
+        "id": 2,
+        "title": "Smart Watch",
+        "description": "Fitness tracking, notifications, and health monitoring in one device.",
+        "price": 199.99,
+        "category": "Electronics",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600",
+        "stock": 9,
+        "rating": 4.4,
+        "quantity": 5
+      },
+      {
+        "id": 3,
+        "title": "Running Shoes",
+        "description": "Lightweight running shoes designed for daily training.",
+        "price": 149.99,
+        "category": "Fashion",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600",
+        "stock": 22,
+        "rating": 4.7,
+        "quantity": 1
+      }
+    ],
+    "total": "1539.91"
+  },
+  {
+    "id": 3,
+    "customer": {
+      "name": "FAHHHHH",
+      "email": "asd@mail.com",
+      "phone": "23424234234++++2342342",
+      "delivery_address": "sdfjasfjl3jlkjjf32j",
+      "city": "23jlkjlkfj23jfj",
+      "postcode": "3343"
+    },
+    "items": [
+      {
+        "id": 17,
+        "title": "Ceramic Dinner Set",
+        "description": "Modern ceramic dinner set for four people.",
+        "price": 109.99,
+        "category": "Home",
+        "image": "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600",
+        "stock": 10,
+        "rating": 4.6,
+        "quantity": 1
+      },
+      {
+        "id": 26,
+        "title": "Hair Dryer",
+        "description": "Compact hair dryer with heat and speed settings.",
+        "price": 84.99,
+        "category": "Beauty",
+        "image": "https://images.unsplash.com/photo-1727364438136-6edc10ef0a52?w=600&h=600",
+        "stock": 15,
+        "rating": 4.1,
+        "quantity": 15
+      },
+      {
+        "id": 25,
+        "title": "Face Moisturiser",
+        "description": "Daily face moisturiser suitable for all skin types.",
+        "price": 24.99,
+        "category": "Beauty",
+        "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&h=600",
+        "stock": 45,
+        "rating": 4.5,
+        "quantity": 7
+      }
+    ],
+    "total": "1559.77"
+  }
+]

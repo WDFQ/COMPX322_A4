@@ -54,7 +54,7 @@ export function ProductCard({ product }) {
                 {/* popup for showing car added successfully */}
                 {showToast && (
                     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-6 py-3 rounded-full shadow-xl z-50 flex items-center space-x-2 animate-fade-in-up">
-                        <span>{product.name} added to cart!</span>
+                        <span>Added to cart!</span>
                     </div>
                 )}
             </div>

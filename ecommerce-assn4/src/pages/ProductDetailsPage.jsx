@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 
 export function ProductDetailsPage() {
     const { id } = useParams()
     const { addToCart } = useContext(CartContext)
+    const [showToast, setShowToast] = useState(false)
     const navigate = useNavigate()
 
     const { data, isLoading, isError } = useQuery({
@@ -20,6 +21,12 @@ export function ProductDetailsPage() {
 
     function handleClick() {
         addToCart(data)
+
+        // shows added to cart message
+        setShowToast(true)
+        setTimeout(() => {
+            setShowToast(false)
+        }, 3000)
     }
 
     async function getProduct(id) {
@@ -45,6 +52,13 @@ export function ProductDetailsPage() {
                 <button onClick={handleClick} className="mt-6 rounded-md bg-gray-800 px-4 py-3 text-white hover:bg-gray-600">
                     Add to cart | ${price}
                 </button>
+
+                {/* popup for showing car added successfully */}
+                {showToast && (
+                    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-6 py-3 rounded-full shadow-xl z-50 flex items-center space-x-2 animate-fade-in-up">
+                        <span>Added to cart!</span>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -46,7 +46,7 @@ export function ProductsPage() {
             {isProductError || isCategoryError ? <p>An error has occurred</p> : null}
             {isProductLoading || isCategoryLoading ? <p>Loading...</p> : null}
             {!isProductError && !isCategoryError && !isProductLoading && !isCategoryLoading ? (
-                <div className="grid grid-cols-3 px-35 gap-10 bg-white py-20">
+                <div className="grid grid-cols-1 px-35 gap-10 bg-white py-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {productData.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
