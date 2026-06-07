@@ -19,6 +19,7 @@ function App() {
         localStorage.setItem('cart', JSON.stringify(cart))
     }, [cart])
 
+    // updates to new quantity set by + or - in cart item
     function updateQuantity(id, newQuantity) {
         if (newQuantity < 1) {
             removeFromCart(id)
@@ -35,10 +36,12 @@ function App() {
         setCart(cart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
     }
 
+    // reinstate list without the item of specified id
     function removeFromCart(id) {
         setCart(cart.filter((item) => item.id !== id))
     }
 
+    // adds product to cart if not exist already
     function addToCart(product) {
         // find the product via its id
         const item = cart.find((item) => item.id === product.id)

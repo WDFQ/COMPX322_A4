@@ -1,29 +1,24 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
 import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 
 export function NavBar() {
     const { cart } = useContext(CartContext)
-    //TODO: wireup cartCount to actual cart info
     const cartCount = cart.length
-    console.log(cartCount)
 
     return (
-        <nav className="bg-mist-900 text-white px-8 py-4 flex items-center justify-between">
-            {/* logo that also takes you to product page */}
-            <NavLink to="/">
-                {/* <img src="/logo.png" alt="Logo" className="h-10 w-auto" /> */}
-                <span className="text-xl font-bold">Shop</span>
+        <nav className="flex items-center bg-mist-900 px-8 py-4 text-white">
+            <NavLink to="/" className="rounded-md bg-white/10 px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-white/10 transition-colors hover:bg-white/20">
+                Products
             </NavLink>
 
-            {/* product page nav link */}
-            <NavLink to="/">Products</NavLink>
+            <NavLink to="/" className="flex-1 text-center text-xl font-bold">
+                1ꌗ꓄-ꃅꍏꈤꀸ ꂵꍏꋪꀘꍟ꓄ꉣ꒒ꍏꉓꍟ
+            </NavLink>
 
-            {/* cart page nav link */}
-            <NavLink to="/cart">
+            <NavLink to="/cart" className="flex items-center gap-2">
                 <ShoppingCart size={24} />
-                {/* only show badge if cart has something */}
                 {cartCount > 0 ? <span>{cartCount}</span> : null}
             </NavLink>
         </nav>

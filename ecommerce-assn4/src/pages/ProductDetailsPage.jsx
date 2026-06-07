@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
-import { data, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 
 export function ProductDetailsPage() {
@@ -31,19 +31,19 @@ export function ProductDetailsPage() {
     }
 
     return (
-        <div className="flex bg-white">
-            <img src={image} alt={title} className="rounded-lg" />
+        <div className="mx-auto flex max-w-5xl flex-col gap-8 bg-gray-50 p-6 md:flex-row md:items-start md:p-10">
+            <img src={image} alt={title} className="w-full rounded-lg border border-gray-200 bg-white object-contain p-4 shadow-sm md:max-w-md" />
 
             {/* text part of product */}
-            <div className="flex flex-col jutify-around mx-10 px-10">
-                <h2>{title}</h2>
-                <p>{price}</p>
-                <p>{category}</p>
-                <p>{description}</p>
-                <p>{stock}</p>
+            <div className="flex flex-col justify-around rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200 md:flex-1">
+                <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
+                <p className="mt-2 text-xl font-semibold text-gray-800">${price}</p>
+                <p className="mt-2 text-sm uppercase tracking-wide text-gray-500">{category}</p>
+                <p className="mt-4 text-gray-700">{description}</p>
+                <p className="mt-4 text-sm text-gray-600">In stock: {stock}</p>
 
-                <button onClick={handleClick} className="hover:bg-gray-600 bg-gray-800 text-white rounded-md px-2 my-3">
-                    Add to cart | {price}
+                <button onClick={handleClick} className="mt-6 rounded-md bg-gray-800 px-4 py-3 text-white hover:bg-gray-600">
+                    Add to cart | ${price}
                 </button>
             </div>
         </div>
